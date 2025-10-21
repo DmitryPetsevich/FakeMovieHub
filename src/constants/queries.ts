@@ -66,4 +66,9 @@ export const QUERIES: {
       ...params,
     },
   }),
+  search_movie: (path = '', params = {}) => ({
+    base: API_BASE_URL,
+    path: path || 'search/movie',
+    params,
+  }),
 };
