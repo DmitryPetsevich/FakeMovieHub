@@ -17,3 +17,21 @@ export function createURL(url: IUrl): string {
 
   return `${base}/${path}?${p.toString()}`;
 }
+
+export function normalizeMovieRuntime(runtime: number): string {
+  return `${Math.floor(runtime / 60)}h ${runtime % 60}m`;
+}
+
+export function normalizeMovieGenres(
+  genres: Array<{ id: number; name: string }>,
+  size = genres.length,
+) {
+  return genres
+    .slice(0, size)
+    .map(({ name }) => name)
+    .join(', ');
+}
+
+export function formatNumberWithCommas(num: number): string {
+  return new Intl.NumberFormat('en-US').format(num) + '.00';
+}
