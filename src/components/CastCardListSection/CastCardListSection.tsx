@@ -1,31 +1,25 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CastCard from '@components/CastCard/CastCard';
 import CardList from '@components/CardList/CardList';
 import SkeletonList from '@components/SkeletonCardList/SkeletonCardList';
 import type { ICast } from '@interfaces/index';
+import ErrorBox from '@components/ErrorBox/ErrorBox';
+import useFirstLoad from '@hooks/useFirstLoad';
 
 type Props = {
-  loading: boolean;
-  data?: ICast[];
+  data: ICast[];
+  error: string | null;
 };
 
-const CastCardListSection = ({ loading, data = [] }: Props) => {
-  const firstLoad = useRef(true);
-
-  useEffect(() => {
-    let timeoutID = setTimeout(() => {
-      firstLoad.current = false;
-    }, 1000);
-
-    return () => clearTimeout(timeoutID);
-  }, []);
+const CastCardListSection = ({ data = [], error }: Props) => {
+  const firstLoad = useFirstLoad();
 
   const renderedList = useMemo(
     () => (
       <Box sx={{ display: 'flex', minHeight: '320px' }}>
-        {loading && firstLoad.current ? (
+        {firstLoad ? (
           <SkeletonList />
         ) : data.length ? (
           <CardList<ICast>
@@ -37,25 +31,11 @@ const CastCardListSection = ({ loading, data = [] }: Props) => {
             }}
           />
         ) : (
-          <Box
-            sx={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: 'lightgrey',
-            }}
-          >
-            <Typography variant="h4" color="error">
-              Oops! Something went wrong!
-            </Typography>
-            <Typography variant="h5">Try reload the page or turn your VPN on!</Typography>
-          </Box>
+          <ErrorBox error={error} />
         )}
       </Box>
     ),
-    [data, loading],
+    [data, firstLoad],
   );
 
   return (
