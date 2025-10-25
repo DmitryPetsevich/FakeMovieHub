@@ -14,11 +14,12 @@ const VideoTrailer = ({ trailerKey, autoplay = false }: Props) => {
   return (
     <Box
       sx={{
-        width: '100vw',
+        width: '100%',
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        boxSizing: 'border-box',
       }}
     >
       <Box

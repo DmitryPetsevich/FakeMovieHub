@@ -18,6 +18,20 @@ export function createURL(url: IUrl): string {
   return `${base}/${path}?${p.toString()}`;
 }
 
+export async function fetchJSON<T>(url: IUrl): Promise<T> {
+  try {
+    const response = await fetch(createURL(url));
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+    }
+
+    return response.json() as Promise<T>;
+  } catch (e: unknown) {
+    throw new Error(e instanceof Error ? e.message : 'Unexpected error!');
+  }
+}
+
 export function normalizeMovieRuntime(runtime: number): string {
   return `${Math.floor(runtime / 60)}h ${runtime % 60}m`;
 }

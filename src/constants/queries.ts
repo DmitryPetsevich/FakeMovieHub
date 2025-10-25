@@ -61,10 +61,7 @@ export const QUERIES: {
   movie_detail: (path = '', params = {}) => ({
     base: API_BASE_URL,
     path,
-    params: {
-      append_to_response: 'credits,reviews,videos',
-      ...params,
-    },
+    params,
   }),
   search_movie: (path = '', params = {}) => ({
     base: API_BASE_URL,

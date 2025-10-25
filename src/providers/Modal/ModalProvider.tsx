@@ -1,4 +1,12 @@
-import { createElement, useCallback, useState, type FC, type JSX, type ReactNode } from 'react';
+import {
+  createElement,
+  useCallback,
+  useEffect,
+  useState,
+  type FC,
+  type JSX,
+  type ReactNode,
+} from 'react';
 import { createPortal } from 'react-dom';
 import ModalContext, { type OpenWindowFunc } from './ModalContext';
 import Box from '@mui/material/Box';
@@ -10,6 +18,10 @@ type Props = {
 const ModalProvider: FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [component, setComponent] = useState<JSX.Element | null>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : 'auto';
+  }, [open]);
 
   const openWindow = useCallback<OpenWindowFunc>((Component, props) => {
     setOpen(true);
