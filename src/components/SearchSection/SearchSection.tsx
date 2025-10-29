@@ -17,13 +17,14 @@ const SearchSection = () => (
         minHeight: '300px',
         width: {
           xs: '100%',
-          sm: '100%',
           md: '70%',
-          lg: '70%',
-          xl: '70%',
         },
+        px: {
+          xs: 2,
+          md: 0,
+        },
+        paddingTop: (theme) => theme.spacing(2),
         mx: 'auto',
-        p: 4,
       }}
     >
       <Typography variant="h3" sx={{ fontWeight: '500' }}>

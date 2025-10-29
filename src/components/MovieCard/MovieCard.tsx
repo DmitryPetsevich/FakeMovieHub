@@ -21,10 +21,10 @@ const MotionCard = styled(motion.div)(({ theme }) => ({
   display: 'flex',
   margin: theme.spacing(0, 1),
   '&:first-of-type': {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(0),
   },
   '&:last-of-type': {
-    marginRight: theme.spacing(4),
+    marginRight: theme.spacing(0),
   },
 }));
 

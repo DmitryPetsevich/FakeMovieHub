@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import Stack, { type StackProps } from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
 import VoteCircle from '@components/VoteCircle/VoteCircle';
 import PlayButton from '@components/PlayButton/PlayButton';
@@ -10,6 +10,7 @@ import { formatNumberWithCommas, normalizeMovieGenres, normalizeMovieRuntime } f
 import type { IMovie } from '@interfaces/index';
 import { IMAGE_BASE_URL } from '@constants/index';
 import { IMAGE_SIZES } from '@constants/imageSizes';
+import useResponsiveValue from '@hooks/useResponsiveValue';
 
 type Props = {
   data: IMovie | null;
@@ -19,6 +20,8 @@ type Props = {
 
 const MovieInfoSection = ({ data, trailerKey }: Props) => {
   const [posterReady, setPosterReady] = useState(false);
+  const direction = useResponsiveValue<StackProps['direction']>({ xs: 'column', md: 'row' });
+  const posterWidth = useResponsiveValue({ xs: '100%', md: '300px ' });
 
   return (
     <SectionWithBackground
@@ -31,25 +34,20 @@ const MovieInfoSection = ({ data, trailerKey }: Props) => {
       }}
     >
       <Stack
+        direction={direction}
+        gap={2}
         sx={{
           position: 'relative',
-          flexDirection: {
-            xs: 'column',
-            sm: 'row',
-            md: 'row',
-            lg: 'row',
-            xl: 'row',
-          },
           width: {
             xs: '100%',
-            sm: '100%',
             md: '70%',
-            lg: '70%',
-            xl: '70%',
+          },
+          px: {
+            xs: 2,
+            md: 0,
           },
           margin: 'auto',
           zIndex: 1,
-          gap: 2,
         }}
       >
         {data ? (
@@ -57,13 +55,13 @@ const MovieInfoSection = ({ data, trailerKey }: Props) => {
             <Box
               sx={{
                 height: '450px',
-                width: '300px',
+                width: posterWidth,
                 flexShrink: 0,
               }}
             >
               <Box
                 component="img"
-                src={`${IMAGE_BASE_URL}w780${data.poster_path}`}
+                src={`${IMAGE_BASE_URL}${IMAGE_SIZES.poster}${data.poster_path}`}
                 sx={{
                   width: '100%',
                   height: '100%',

@@ -109,10 +109,11 @@ const ReviewSection = ({ data, error, size = 10, sx = {} }: Props) => {
       sx={{
         width: {
           xs: '100%',
-          sm: '100%',
           md: '70%',
-          lg: '70%',
-          xl: '70%',
+        },
+        px: {
+          xs: 2,
+          md: 0,
         },
         mx: 'auto',
         py: 1,
