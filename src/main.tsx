@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CssBaseline } from '@mui/material';
+import { BrowserRouter } from 'react-router';
+import ModalProvider from '@providers/Modal/ModalProvider.tsx';
 import App from './App.tsx';
 
 import '@fontsource/roboto/300.css';
@@ -11,7 +13,11 @@ import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <CssBaseline />
-    <App />
+    <BrowserRouter>
+      <CssBaseline />
+      <ModalProvider>
+        <App />
+      </ModalProvider>
+    </BrowserRouter>
   </StrictMode>,
 );
