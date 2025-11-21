@@ -8,6 +8,7 @@ const Header = () => (
     sx={{
       position: 'sticky',
       top: 0,
+      flex: '0 0 auto',
       zIndex: 999,
       bgcolor: 'rgb(3, 37, 65)',
       py: 2,
