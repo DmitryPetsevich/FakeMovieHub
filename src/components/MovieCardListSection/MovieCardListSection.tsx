@@ -5,10 +5,12 @@ import Tabs from '@components/Tabs/Tabs';
 import CardList from '@components/CardList/CardList';
 import SkeletonCardList from '@components/SkeletonCardList/SkeletonCardList';
 import MovieCard from '@components/MovieCard/MovieCard';
+import Select from '@components/Select/Select';
 import useFetchList from '@hooks/useFetchList';
+import useFirstLoad from '@hooks/useFirstLoad';
+import useResponsiveValue from '@hooks/useResponsiveValue';
 import type { IMovie, ITab } from '@interfaces/index';
 import ErrorBox from '@components/ErrorBox/ErrorBox';
-import useFirstLoad from '@hooks/useFirstLoad';
 
 type Props = {
   title: string;
@@ -21,6 +23,10 @@ const MovieCardListSection = ({ title, tabs }: Props) => {
   const firstLoad = useFirstLoad(DELAY);
   const [tab, setTab] = useState(tabs[0]);
   const { response, loading, error } = useFetchList<IMovie>(tab.url, DELAY);
+  const menu = useResponsiveValue<React.JSX.Element>({
+    xs: <Select options={tabs} value={tab.value} onChange={(value) => handleChangeTab(value)} />,
+    md: <Tabs tabs={tabs} value={tab.value} onChange={(value) => handleChangeTab(value)} />,
+  });
 
   const handleChangeTab = (value: string) => {
     const newTab = tabs.find((t) => t.value === value) as ITab;
@@ -73,9 +79,7 @@ const MovieCardListSection = ({ title, tabs }: Props) => {
         <Typography variant="h5" sx={{ fontWeight: '500' }}>
           {title}
         </Typography>
-        {tabs.length ? (
-          <Tabs tabs={tabs} value={tab.value} onChange={(value) => handleChangeTab(value)} />
-        ) : null}
+        {tabs.length ? menu : null}
       </Box>
       {renderedList}
     </Box>
